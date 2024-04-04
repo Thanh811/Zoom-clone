@@ -1,3 +1,4 @@
+"use server"
 import { currentUser } from "@clerk/nextjs";
 import { StreamClient } from "@stream-io/node-sdk";
 

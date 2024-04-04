@@ -4,6 +4,7 @@ import { Dialog, DialogContent } from "./ui/dialog";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import Loader from "./Loader";
 
 interface MeetingModalProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ interface MeetingModalProps {
   image?: string;
   buttonClassName?: string;
   buttonIcon?: string;
+  isLoading?: boolean
 }
 
 const MeetingModal = ({
@@ -31,7 +33,12 @@ const MeetingModal = ({
   image,
   buttonClassName,
   buttonIcon,
+  isLoading = false
 }: MeetingModalProps) => {
+  const contentButton = () => {
+    if (isLoading) return <Loader />
+    return buttonText || "Schedule Meeting"
+  }
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="flex w-full max-w-[520px] flex-col gap-6 border-none bg-dark-1 px-6 py-9 text-white">
@@ -50,6 +57,7 @@ const MeetingModal = ({
               "bg-blue-1 focus-visible:ring-0 focus-visible:ring-offset-0"
             }
             onClick={handleClick}
+            disabled={isLoading}
           >
             {buttonIcon && (
               <Image
@@ -60,7 +68,7 @@ const MeetingModal = ({
               />
             )}{" "}
             &nbsp;
-            {buttonText || "Schedule Meeting"}
+            {contentButton()}
           </Button>
         </div>
       </DialogContent>
